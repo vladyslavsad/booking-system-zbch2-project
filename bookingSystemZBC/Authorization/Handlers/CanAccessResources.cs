@@ -7,10 +7,11 @@ using System.Security.Claims;
 
 namespace bookingSystemZBC.Authorization.Handlers
 {
-    public class OwnerOrAdminHandler : AuthorizationHandler<OwnerOrAdminRequirement, IOwnedResource>
+    public class CanAccessResources : AuthorizationHandler<CanAccessResourcesRequirement, IOwnedResource>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, OwnerOrAdminRequirement requirement, IOwnedResource resource)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CanAccessResourcesRequirement requirement, IOwnedResource resource)
         {
+            Console.WriteLine("HANDLER CALLED");
             var memberId = context.User.FindFirst(CustomClaims.MemberId)?.Value;
             var isAdmin = context.User.IsInRole(CustomRoles.Admin);
 

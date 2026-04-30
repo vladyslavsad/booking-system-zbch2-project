@@ -9,13 +9,14 @@ namespace bookingSystemZBC.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class SessionsController(IActivitySchedulingService activitySchedulingService, IAuthorizationService authorizationService) : ControllerBase
+public class SessionsController(IActivitySchedulingService activitySchedulingService) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyList<ActivitySessionDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyList<ActivitySessionDto>>> GetAll(CancellationToken cancellationToken)
         => Ok(await activitySchedulingService.GetAllAsync(cancellationToken));
 
+    
     [HttpGet("getById/{id:int}")]
     [ProducesResponseType(typeof(ActivitySessionDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -35,17 +36,17 @@ public class SessionsController(IActivitySchedulingService activitySchedulingSer
         return Ok(created);
     }
 
-
+    [Authorize(Roles = CustomRoles.Admin)]
     [HttpDelete("delete/{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
         var session = await activitySchedulingService.GetByIdAsync(id, cancellationToken);
-        var result = await authorizationService.AuthorizeAsync(User, session, ResourceRequirements.CanAccessResources);
-        if (!result.Succeeded)
+        
+        if (session is null)
         {
-            return Forbid();
+            return NotFound();
         }
         var deleted = await activitySchedulingService.DeleteActivitySession(id, cancellationToken);
         return deleted ? NoContent() : NotFound();

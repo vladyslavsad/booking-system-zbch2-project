@@ -1,3 +1,5 @@
+using bookingSystemZBC.Authorization.Interfaces;
+
 namespace bookingSystemZBC.DTOs.Sessions;
 
 public class ActivitySessionDto

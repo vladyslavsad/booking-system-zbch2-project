@@ -126,9 +126,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     
 
         modelBuilder.Entity<Location>().HasData(
-            new Location { Id = 1, Name = "Main Hall", Description = "Large multi-purpose hall", IsAvailable = true, Capacity = 60 },
-            new Location { Id = 2, Name = "Pool Area", Description = "Indoor swimming pool", IsAvailable = true, Capacity = 30 },
-            new Location { Id = 3, Name = "Climbing Wall", Description = "Indoor climbing wall with instructor area", IsAvailable = true, Capacity = 24 }
+            new Location { Id = 1, Name = "Main Hall", Description = "Large multi-purpose hall", Capacity = 60 },
+            new Location { Id = 2, Name = "Pool Area", Description = "Indoor swimming pool" , Capacity = 30 },
+            new Location { Id = 3, Name = "Climbing Wall", Description = "Indoor climbing wall with instructor area", Capacity = 24 }
         );
 
         modelBuilder.Entity<Member>().HasData(

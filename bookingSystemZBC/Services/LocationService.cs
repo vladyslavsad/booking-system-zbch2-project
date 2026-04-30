@@ -57,7 +57,6 @@ public class LocationService(ILocationRepository locationRepository) : ILocation
         Id = location.Id,
         Name = location.Name,
         Description = location.Description,
-        IsAvailable = location.IsAvailable,
         Capacity = location.Capacity
     };
 }
