@@ -13,8 +13,6 @@ public class Location
     [MaxLength(500)]
     public string? Description { get; set; }
 
-    public bool IsAvailable { get; set; } = true;
-
     public int Capacity { get; set; }
 
     public ICollection<ActivitySession> Sessions { get; set; } = new List<ActivitySession>();

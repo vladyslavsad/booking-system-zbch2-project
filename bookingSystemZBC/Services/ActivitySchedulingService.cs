@@ -29,7 +29,9 @@ public class ActivitySchedulingService(
         var location = await locationRepository.GetByIdAsync(request.LocationId, cancellationToken)
             ?? throw new KeyNotFoundException($"Location {request.LocationId} was not found.");
 
-        if (!location.IsAvailable)
+        var isLocationAvailable = await this.isLocationAvailable(request.LocationId, request.StartTimeUtc, request.EndTimeUtc, cancellationToken);
+        //fix is available logic
+        if (!isLocationAvailable)
         {
             throw new InvalidOperationException("Location is not available.");
         }
@@ -45,8 +47,6 @@ public class ActivitySchedulingService(
 
         await activitySessionRepository.AddAsync(session, cancellationToken);
         await activitySessionRepository.SaveChangesAsync(cancellationToken);
-
-        location.IsAvailable = false;
 
         locationRepository.Update(location);
         await locationRepository.SaveChangesAsync(cancellationToken);
@@ -67,6 +67,12 @@ public class ActivitySchedulingService(
         activitySessionRepository.Delete(session);
         await activitySessionRepository.SaveChangesAsync(cancellationToken);
         return true;
+    }
+
+    public async Task<bool> isLocationAvailable(int locationId, DateTime startTimeUtc, DateTime endTimeUtc, CancellationToken cancellationToken = default)
+    {
+        var sessionsAtLocation = await activitySessionRepository.GetAllByDateRangeAsync(startTimeUtc, endTimeUtc, cancellationToken);
+        return !sessionsAtLocation.Any(s => s.LocationId == locationId);
     }
 
     private static ActivitySessionDto MapToDto(ActivitySession session) => new()

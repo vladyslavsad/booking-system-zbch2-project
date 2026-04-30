@@ -2,7 +2,7 @@
 
 namespace bookingSystemZBC.Authorization.Requirements
 {
-    public class OwnerOrAdminRequirement : IAuthorizationRequirement
+    public class CanAccessResourcesRequirement : IAuthorizationRequirement
     {
     }
 }

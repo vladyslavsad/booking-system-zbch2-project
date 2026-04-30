@@ -1,17 +1,15 @@
-using bookingSystemZBC.Data;
 using bookingSystemZBC.Domain.Entities;
 using bookingSystemZBC.DTOs.Bookings;
 using bookingSystemZBC.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
 
 namespace bookingSystemZBC.Services;
 
-public class BookingService(
+// Race condition test version of BookingService, without transaction handling or concurrency checks
+// This is only for testing purposes to demonstrate the need for proper concurrency handling in the real BookingService implementation
+public class BookingServiceRCTest(
     IBookingRepository bookingRepository,
     IActivitySessionRepository activitySessionRepository,
-    IRepository<Member> memberRepository,
-    AppDbContext dbContext) : IBookingService
+    IRepository<Member> memberRepository) : IBookingServiceRCTest
 {
     public async Task<IReadOnlyList<BookingDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -27,8 +25,6 @@ public class BookingService(
 
     public async Task<BookingDto> CreateAsync(BookingCreateDto request, CancellationToken cancellationToken = default)
     {
-        using var transaction = dbContext.Database.BeginTransaction(IsolationLevel.Serializable);
-
         var member = await memberRepository.GetByIdAsync(request.MemberId, cancellationToken)
             ?? throw new KeyNotFoundException($"Member {request.MemberId} was not found.");
 
@@ -66,8 +62,6 @@ public class BookingService(
 
         await bookingRepository.AddAsync(booking, cancellationToken);
         await bookingRepository.SaveChangesAsync(cancellationToken);
-
-        await transaction.CommitAsync();
 
         booking.Member = member;
         booking.ActivitySession = session;

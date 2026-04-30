@@ -31,6 +31,7 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingServiceRCTest, BookingServiceRCTest>();
 builder.Services.AddScoped<IActivitySchedulingService, ActivitySchedulingService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
@@ -58,6 +59,18 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(ResourceRequirements.CanAccessResources, policy =>
     policy.Requirements.Add(new CanAccessResourcesRequirement()));
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "MyPolicy",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:53400", "http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+        });
 });
 
 builder.Services.AddScoped<IAuthorizationHandler, CanAccessResources>();
@@ -98,9 +111,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ApiExceptionMiddleware>();
+app.UseCors("MyPolicy");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 
