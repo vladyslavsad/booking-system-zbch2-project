@@ -5,22 +5,22 @@ namespace bookingSystemZBC.Domain.Entities.Activities;
 
 public abstract class Activity
 {
-    public int Id { get; }
+    public int Id { get; private set; }
 
     [Required]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; private set; } = string.Empty;
 
     [Required]
-    public ActivityType Type { get; set; }
+    public ActivityType Type { get; private set; }
 
     [Range(1, 1000)]
-    public int MaxParticipants { get; set; }
+    public int MaxParticipants { get; private set; }
 
     [Range(typeof(double), "0", "999999")]
-    public double Price { get; set; }
+    public double Price { get; private set; }
 
-    public string AdditionalInfoField1 { get; set; } = string.Empty;
-    public string Level { get; set; } = string.Empty;
+    public string AdditionalInfoField1 { get;  set; } = string.Empty;
+    public string Level { get;  set; } = string.Empty;
 
 
     public ICollection<ActivitySession> Sessions { get; set; } = new List<ActivitySession>();

@@ -4,7 +4,7 @@ namespace bookingSystemZBC.Domain.Entities;
 
 public class Location
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
 
     [Required]
     [MaxLength(120)]

@@ -5,7 +5,7 @@ namespace bookingSystemZBC.Domain.Entities;
 
 public class Member : IOwnedResource
 {
-    public int Id { get; set; }
+    public int Id { get;  private set; }
     public int OwnerId => Id;
 
     [Required]

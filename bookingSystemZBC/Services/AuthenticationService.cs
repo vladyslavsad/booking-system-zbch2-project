@@ -10,7 +10,7 @@ using System.Text;
 
 namespace bookingSystemZBC.Services
 {
-    public class AuthentificationService(IConfiguration cfg, AppDbContext appDbContext, IUserRepository userRepository) : IAuthentificationService
+    public class AuthenticationService(IConfiguration cfg, AppDbContext appDbContext, IUserRepository userRepository) : IAuthenticationService
     {
         public async Task<UserDTO> ValidateUserCredentialsAsync(string email, string password, CancellationToken cancellationToken = default)
         {

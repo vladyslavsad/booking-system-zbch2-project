@@ -28,7 +28,6 @@ public class ActivityService(IActivityRepository activityRepository) : IActivity
         }
 
         var activity = ActivityFactory.Create(request.Name, request.Type, request.MaxParticipants, request.Price, request.AdditionalInfoField1, request.Level);
-
         await activityRepository.AddAsync(activity, cancellationToken);
         await activityRepository.SaveChangesAsync(cancellationToken);
 

@@ -5,7 +5,7 @@ namespace bookingSystemZBC.Domain.Entities;
 
 public class ActivitySession
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
     public int ActivityId { get; set; }
     public Activity? Activity { get; set; }
     public int LocationId { get; set; }

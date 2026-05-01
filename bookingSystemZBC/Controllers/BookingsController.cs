@@ -13,7 +13,6 @@ namespace bookingSystemZBC.Controllers;
 [Route("api/[controller]")]
 public class BookingsController(
     IBookingService bookingService,
-    IBookingServiceRCTest bookingServiceRCTest,
     IAuthorizationService authorizationService,
     IMemberService memberService,
     IServiceScopeFactory scopeFactory) : ControllerBase
@@ -48,7 +47,7 @@ public class BookingsController(
     public async Task<ActionResult<BookingDto>> Create(BookingCreateDto request, CancellationToken cancellationToken)
     {
         var member = await memberService.GetByIdAsync(request.MemberId, cancellationToken)
-        ?? throw new KeyNotFoundException($"Member {request.MemberId} not found");
+        ?? throw new BookingExeption();
 
         var result = await authorizationService.AuthorizeAsync(User, member, ResourceRequirements.CanAccessResources);
         if (!result.Succeeded)
@@ -65,7 +64,7 @@ public class BookingsController(
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
         var booking = await bookingService.GetByIdAsync(id, cancellationToken)
-       ?? throw new KeyNotFoundException($"Member {id} not found");
+       ?? throw new BookingExeption();
 
         var result = await authorizationService.AuthorizeAsync(User, booking, ResourceRequirements.CanAccessResources);
         if (!result.Succeeded)

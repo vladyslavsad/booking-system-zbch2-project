@@ -10,6 +10,11 @@ public class ApiExceptionMiddleware(RequestDelegate next, ILogger<ApiExceptionMi
         {
             await next(context);
         }
+        catch(BookingExeption ex)
+        {
+            logger.LogWarning(ex, "Booking exception occurred.");
+            await WriteProblemDetailsAsync(context, HttpStatusCode.BadRequest, ex.Message);
+        }
         catch (KeyNotFoundException ex)
         {
             logger.LogWarning(ex, "Resource not found.");

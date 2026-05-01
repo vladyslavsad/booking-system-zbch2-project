@@ -8,14 +8,14 @@ namespace bookingSystemZBC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenteficationController(IAuthentificationService authService) : ControllerBase
+    public class AuthenticationController(IAuthenticationService authService) : ControllerBase
     {
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<string>> Login(string email, string passwird,CancellationToken cancellationToken = default)
+        public async Task<ActionResult<string>> Login(string email, string password,CancellationToken cancellationToken = default)
         {
-            var user = await authService.ValidateUserCredentialsAsync(email, passwird, cancellationToken);
+            var user = await authService.ValidateUserCredentialsAsync(email, password, cancellationToken);
             if (user is null)
             {
                 return BadRequest("Invalid email or password.");

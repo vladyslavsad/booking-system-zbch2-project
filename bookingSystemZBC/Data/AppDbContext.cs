@@ -126,24 +126,24 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     
 
         modelBuilder.Entity<Location>().HasData(
-            new Location { Id = 1, Name = "Main Hall", Description = "Large multi-purpose hall", Capacity = 60 },
-            new Location { Id = 2, Name = "Pool Area", Description = "Indoor swimming pool" , Capacity = 30 },
-            new Location { Id = 3, Name = "Climbing Wall", Description = "Indoor climbing wall with instructor area", Capacity = 24 }
+            new  { Id = 1, Name = "Main Hall", Description = "Large multi-purpose hall", Capacity = 60 },
+            new  { Id = 2, Name = "Pool Area", Description = "Indoor swimming pool" , Capacity = 30 },
+            new  { Id = 3, Name = "Climbing Wall", Description = "Indoor climbing wall with instructor area", Capacity = 24 }
         );
 
         modelBuilder.Entity<Member>().HasData(
-            new Member { Id = 1, Name = "Alice Jensen", Email = "alice@example.com", Age = 26 },
-            new Member { Id = 2, Name = "Bob Nielsen", Email = "bob@example.com", Age = 31 },
-            new Member { Id = 3, Name = "Clara Madsen", Email = "clara@example.com", Age = 22 }
+            new  { Id = 1, Name = "Alice Jensen", Email = "alice@example.com", Age = 26 },
+            new  { Id = 2, Name = "Bob Nielsen", Email = "bob@example.com", Age = 31 },
+            new  { Id = 3, Name = "Clara Madsen", Email = "clara@example.com", Age = 22 }
         );
 
         modelBuilder.Entity<Role>().HasData(
-          new Role { RoleId = 1, RoleName = "User" },
-          new Role { RoleId = 2, RoleName = "Admin" }
+          new  { RoleId = 1, RoleName = "User" },
+          new  { RoleId = 2, RoleName = "Admin" }
         );
 
         modelBuilder.Entity<User>().HasData(
-            new User
+            new 
             {
                 Id = 1,
                 UserName = "admin",
@@ -152,7 +152,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 FirstName = "System",
                 Surname = "Administrator"
             },
-            new User
+            new 
             {
                 Id = 2,
                 UserName = "alice",
@@ -162,7 +162,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 Surname = "Jensen",
                 MemberId = 1
             },
-            new User
+            new 
             {
                 Id = 3,
                 UserName = "bob",
@@ -172,7 +172,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 Surname = "Nielsen",
                 MemberId = 2
             },
-            new User
+            new 
             {
                 Id = 4,
                 UserName = "clara",
@@ -193,7 +193,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 MaxParticipants = 20,
                 Price = 75.00,
                 AdditionalInfoField1 = "Hatha flow",
-                AddtionalInfoField1 = "Hatha flow",
                 Level = "Beginner"
             }
         );
@@ -225,7 +224,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         );
 
         modelBuilder.Entity<ActivitySession>().HasData(
-            new ActivitySession
+            new 
             {
                 Id = 1,
                 ActivityId = 1,
@@ -234,7 +233,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 EndTimeUtc = new DateTime(2026, 5, 4, 17, 0, 0, DateTimeKind.Utc),
                 Notes = "Bring your own mat if you prefer."
             },
-            new ActivitySession
+            new 
             {
                 Id = 2,
                 ActivityId = 2,
@@ -243,7 +242,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 EndTimeUtc = new DateTime(2026, 5, 5, 18, 30, 0, DateTimeKind.Utc),
                 Notes = "Meet at the pool entrance 10 minutes before start."
             },
-            new ActivitySession
+            new 
             {
                 Id = 3,
                 ActivityId = 3,
@@ -252,7 +251,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 EndTimeUtc = new DateTime(2026, 5, 6, 17, 0, 0, DateTimeKind.Utc),
                 Notes = "Harnesses are provided."
             },
-            new ActivitySession
+            new 
             {
                 Id = 4,
                 ActivityId = 1,
@@ -264,28 +263,28 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         );
 
         modelBuilder.Entity<Booking>().HasData(
-            new Booking
+            new 
             {
                 Id = 1,
                 MemberId = 1,
                 ActivitySessionId = 1,
                 CreatedAtUtc = new DateTime(2026, 4, 28, 9, 0, 0, DateTimeKind.Utc)
             },
-            new Booking
+            new 
             {
                 Id = 2,
                 MemberId = 2,
                 ActivitySessionId = 2,
                 CreatedAtUtc = new DateTime(2026, 4, 28, 9, 15, 0, DateTimeKind.Utc)
             },
-            new Booking
+            new 
             {
                 Id = 3,
                 MemberId = 3,
                 ActivitySessionId = 3,
                 CreatedAtUtc = new DateTime(2026, 4, 28, 9, 30, 0, DateTimeKind.Utc)
             },
-            new Booking
+            new 
             {
                 Id = 4,
                 MemberId = 1,

@@ -28,6 +28,8 @@ builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IPolymorfismRepository, PolymorfismRepository>();
+builder.Services.AddScoped<IPolymorfismRepository, PolymorfismRepository>();
 
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
@@ -37,7 +39,8 @@ builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IAuthentificationService, AuthentificationService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IPolymorfismService, PolymorfismService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

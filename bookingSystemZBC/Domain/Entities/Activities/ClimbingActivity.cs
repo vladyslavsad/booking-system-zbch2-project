@@ -15,5 +15,12 @@ namespace bookingSystemZBC.Domain.Entities.Activities
         {
             return $"Climbing Activity: {Name}, Price: {Price}, Max Participants: {MaxParticipants}, Does it have instructor: {AdditionalInfoField1}, Level: {Level}";
         }
+
+        public override double CalculateBrutto()
+        {
+            // For climbing, we might have a different calculation, for example, adding a fixed fee for equipment rental
+            double equipmentRentalFee = 20.0; // Example fixed fee
+            return base.CalculateBrutto() + equipmentRentalFee;
+        }
     }
 }
